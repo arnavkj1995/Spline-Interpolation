@@ -1,6 +1,6 @@
 #Cubic Spline-Interpolation of points from mouse movement 
 
-The cubic spline interpolation is done on some points taken at a time using regression. The c++ library used is alglib for interpolation.
+The cubic spline interpolation is done on last few points that is given by mouse callback function using regression. The c++ library used is alglib for interpolation.
 
 ##REQUIREMENTS
 
