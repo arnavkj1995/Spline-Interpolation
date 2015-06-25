@@ -36,7 +36,7 @@ CubicSpline::CubicSpline(Pose start, Pose end, std::vector<Pose> midPoints)
         AU.setcontent(u.size(), &(u[0]));
         AY.setcontent(y.size(), &(y[0]));
         AX.setcontent(x.size(), &(x[0]));
-        double rho = 3.0;     //3.0  and M = 30 
+        double rho = 2.5;     //3.0  and M = 30 2.5 is best
         spline1dfitpenalized(AU, AX, 3*n, rho, infoX, splineX, repX);
         spline1dfitpenalized(AU, AY, 3*n, rho, infoY, splineY, repY);
         //spline1dbuildcubic(AU, AX, splineX);

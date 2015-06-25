@@ -25,7 +25,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 }
 
 int main(){
-    Mat img(600, 800, CV_8UC3);
+    Mat img(1000, 800, CV_8UC3);
     img = Scalar::all(0);
     vector<Point> mousev,kalmanv;
     mousev.clear();
@@ -35,26 +35,27 @@ int main(){
     namedWindow("nimble", 1);
     setMouseCallback("nimble", CallBackFunc, NULL);
     int check = 0;
+    int numPoints = 5;
     cout << img.cols << endl;
     while(1)
     {
       imshow("nimble", img);
-      if(mousePos.size() >10){
-        cout << "hjere1:" << endl; 
-        Pose start(mousePos[0].x , mousePos[0].y , startThetaX);
-        Pose end(mousePos[10].x, mousePos[10].y, 0);
+      if(mousePos.size() > numPoints){
+        //cout << "hjere1:" << endl; 
+        Pose start(mousePos[0].x , mousePos[0].y , 0);
+        Pose end(mousePos[numPoints].x, mousePos[numPoints].y, 0);
         vector<Pose> midpoints;
-        for(int i = 1; i <10; i++)
+        for(int i = 1; i <numPoints; i++)
           midpoints.push_back(Pose(mousePos[i].x , mousePos[i].y , 0));
         CubicSpline *p = new CubicSpline(start, end, midpoints);
-        cout << "hjere:" << endl;  
+        //cout << "hjere:" << endl;  
         for(int i = 0; i < 1000 ;i++){
            if((p->x(i/1000.) >= 0) && (p->x(i/1000.) < img.rows) && (p->y(i/1000.) >=0) && (p->y(i/1000.) < img.cols))
               img.at<Vec3b>(Point(p->x(i/1000.), p->y(i/1000.))) = 255;
         }
-          mousePos.erase(mousePos.begin(), mousePos.begin() + 9);
+          mousePos.erase(mousePos.begin(), mousePos.begin() + numPoints );
       }
-      waitKey(1);
+      waitKey(16);
     //  break;
     }
     return 0;
